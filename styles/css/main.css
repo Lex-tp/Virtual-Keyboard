@@ -1,3 +1,47 @@
-body {
-  background-color: black;
+.container {
+  width: 1020px;
+  margin: 0 auto;
 }
+
+.button {
+  width: 40px;
+  height: 40px;
+  background-color: #00FA9A;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 10px;
+  border: 1px solid #ffffff;
+  margin-right: 5px;
+}
+.button:hover {
+  background-color: #F08080;
+}
+
+.keyboard {
+  padding: 10px;
+  background-color: #00FA9A;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.line {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.line::after {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  content: "";
+  clear: both;
+}
+
+/*# sourceMappingURL=main.css.map */
