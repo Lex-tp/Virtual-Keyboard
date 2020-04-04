@@ -1,4 +1,10 @@
 @import "color";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
 
 .container {
     width: 1020px;
@@ -6,17 +12,69 @@
 }
 
 .button {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background-color: $mainColor;
     border-radius: 5px;
     text-align: center;
     line-height: 10px;
-    border: 1px solid #ffffff;
+    border: 1px solid $hoverColor;
     margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: $hoverColor;
     &:hover {
-        background-color: #F08080;  
+        background-color: $hoverColor;
+        border: 1px solid $mainColor; 
+        color: $mainColor;
+        cursor: pointer;
     }
+}
+
+.button-big{
+    width: 97px;
+    height: 45px;
+    background-color: $mainColor;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 10px;
+    border: 1px solid $hoverColor;
+    margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: $hoverColor;
+    &:hover {
+        background-color: $hoverColor;
+        border: 1px solid $mainColor; 
+        color: $mainColor;
+        cursor: pointer;
+    }
+}
+
+.button-big-space{
+    width: 357px;
+    height: 45px;
+    background-color: $mainColor;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 10px;
+    border: 1px solid $hoverColor;
+    margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: $hoverColor;
+    &:hover {
+        background-color: $hoverColor;
+        border: 1px solid $mainColor; 
+        color: $mainColor;
+        cursor: pointer;
+    }
+}
+
+
+.active {
+    width: 35px;
+    height: 35px;
+    background-color: $hoverColor;
+    border: 1px solid $mainColor; 
+    color: $mainColor;
 }
 
 .keyboard {
@@ -29,10 +87,14 @@
 
 .line {
     display: flex;
+    margin-top: 5px;
     &::after{
         display: flex;
         flex-direction: column;
         content: "";
         clear: both;
-    }   
+    }  
+    &:nth-child(1) {
+        margin-bottom: 10px; 
+    } 
 }
