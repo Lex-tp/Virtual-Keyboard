@@ -18,14 +18,14 @@ html {
     border-radius: 5px;
     text-align: center;
     line-height: 10px;
-    border: 1px solid $hoverColor;
+    border: 1px solid white;
     margin-right: 5px;
     font-family: 'Roboto', sans-serif;
-    color: $hoverColor;
+    color: white;
     &:hover {
         background-color: $hoverColor;
-        border: 1px solid $mainColor; 
-        color: $mainColor;
+        border: 1px solid white; 
+        color: white;
         cursor: pointer;
     }
 }
@@ -37,14 +37,14 @@ html {
     border-radius: 5px;
     text-align: center;
     line-height: 10px;
-    border: 1px solid $hoverColor;
+    border: 1px solid white;
     margin-right: 5px;
     font-family: 'Roboto', sans-serif;
-    color: $hoverColor;
+    color: white;
     &:hover {
         background-color: $hoverColor;
-        border: 1px solid $mainColor; 
-        color: $mainColor;
+        border: 1px solid white; 
+        color: white;
         cursor: pointer;
     }
 }
@@ -56,25 +56,53 @@ html {
     border-radius: 5px;
     text-align: center;
     line-height: 10px;
-    border: 1px solid $hoverColor;
+    border: 1px solid white;
     margin-right: 5px;
     font-family: 'Roboto', sans-serif;
-    color: $hoverColor;
+    color: white;
     &:hover {
         background-color: $hoverColor;
-        border: 1px solid $mainColor; 
-        color: $mainColor;
+        border: 1px solid white; 
+        color: white;
         cursor: pointer;
     }
 }
 
 
 .active {
-    width: 35px;
-    height: 35px;
-    background-color: $hoverColor;
+    background-color: $pressedColor;
     border: 1px solid $mainColor; 
     color: $mainColor;
+}
+
+.inputbox {
+    width: 794px;
+    height: 230px;
+    margin-left: 110px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    border-radius: 10px;
+    border: 1px solid #188FFF;
+    resize: none;
+    outline: none;
+    font-size: 1.2rem;
+}
+
+.infobox {
+    display: flex;
+    color: #188FFF;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-left: 110px;
+    span {
+        margin-top: 10px;
+        font-weight: 700;
+    }
+    .button-big {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
 
 .keyboard {
