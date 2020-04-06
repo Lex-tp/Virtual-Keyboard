@@ -22,6 +22,7 @@ html {
     margin-right: 5px;
     font-family: 'Roboto', sans-serif;
     color: white;
+    transition: 0.2s;
     &:hover {
         background-color: $hoverColor;
         border: 1px solid white; 
@@ -65,6 +66,7 @@ html {
         border: 1px solid white; 
         color: white;
         cursor: pointer;
+        translate: 1s liner;
     }
 }
 
@@ -72,6 +74,14 @@ html {
 .active {
     background-color: $pressedColor;
     border: 1px solid $mainColor; 
+    border-radius: 20px;
+    color: $mainColor;
+}
+
+.active-caps {
+    background-color: $pressedColor;
+    border: 1px solid $mainColor; 
+    border-radius: 20px;
     color: $mainColor;
 }
 

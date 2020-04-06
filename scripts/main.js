@@ -66,29 +66,32 @@ const EN_KEYS_UP = [
     { key: "🡄", code: 37 }, { key: "🡇", code: 40 }, { key: "🡆", code: 39 }, { key: "Win", code: 92 }]
 ];
 
+const RU_KEYS_CAPS = [81,87,69,82,84,89,85,73,79,80,65,83,68,70,71,72,74,75,76,90,88,67,86,66,78,77,219,221,186,222,188,190,191];
 
-
+const EN_KEYS_CAPS = [81,87,69,82,84,89,85,73,79,80,65,83,68,70,71,72,74,75,76,90,88,67,86,66,78,77];
 
 let keyPressed = true;
 let isEng = false;
 let isUpper = false;
-let infoBox=document.createElement('div');
-let infoText=document.createElement('span');
-let infoTextPlus=document.createElement('span');
-let infoShiftBtn=document.createElement('div');
-let infoShiftText=document.createElement("p");
-let infoAltBtn=document.createElement('div');
-let infoAltText=document.createElement("p");
-let inputText=document.createElement('div');
-let textArea=document.createElement('textarea');
+let infoBox = document.createElement('div');
+let infoText = document.createElement('span');
+let infoTextPlus = document.createElement('span');
+let infoShiftBtn = document.createElement('div');
+let infoShiftText = document.createElement("p");
+let infoAltBtn = document.createElement('div');
+let infoAltText = document.createElement("p");
+let inputText = document.createElement('div');
+let textArea = document.createElement('textarea');
 let buttonKey, key, lineBoard;
 let container = document.createElement('div');
 let keyBoard = document.createElement('div');
-infoText.innerText="To change the language, press ";
-infoTextPlus.innerText="+";
-infoShiftText.innerText="Shift";
+let hotKey = false;
+let isCaps=false;
+infoText.innerText = "To change the language, press ";
+infoTextPlus.innerText = "+";
+infoShiftText.innerText = "Ctrl";
 infoShiftBtn.classList.add('button-big');
-infoAltText.innerText="Alt";
+infoAltText.innerText = "Shift";
 infoAltBtn.classList.add('button-big');
 container.classList.add("container");
 keyBoard.classList.add("keyboard");
@@ -144,6 +147,52 @@ for (let i = 0; i < RU_KEYS.length; i++) {
     }
 }
 
+function changeCaps() {
+    if(!isCaps) {
+        if (isEng == false) {
+            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                    if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
+                        e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+                    }
+                }          
+            });
+        }
+        if (isEng == true) {
+            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                    if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
+                        e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+                    }
+                }      
+            });
+        }
+        document.querySelector(`.button[data="${20}"]`).classList.add('active-caps');
+        isCaps=true;
+    }else{
+        if (isEng == false) {
+            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                    if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
+                        e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+                    }
+                }      
+            });
+        }
+        if (isEng == true) {
+            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                    if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
+                        e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+                    }
+                }      
+            });
+        }
+        document.querySelector(`.button[data="${20}"]`).classList.remove('active-caps');
+        isCaps=false;
+    }
+}
+
 function changeLang() {
     if (isEng == false) {
         keyBoard.querySelectorAll('.button').forEach(function (e, i) {
@@ -180,19 +229,48 @@ function changeSize() {
         });
     }
 }
-
 document.body.addEventListener('keydown', function (e) {
     if (keyPressed) {
-        if (e.keyCode == 16) {
+        if (e.keyCode==16 && !isCaps) {
+            isUpper=false;
             changeSize();
             isUpper = true;
         }
-        if (e.keyCode == 18) {
-            changeLang();
-            isUpper = false;
-        }
         keyPressed = false;
     }
+    if (e.ctrlKey) hotKey = true;
+    if (e.shiftKey && hotKey) {
+        changeLang();
+        isUpper = true;
+        changeSize();
+        hotKey = false;
+    }
+    e.preventDefault();
+    if(e.keyCode==20) {
+        changeCaps();
+    }
+    if(e.keyCode==16 && isCaps){
+            if (isEng == false) {
+                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                        if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
+                            e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+                        }
+                    }      
+                });
+            }
+            if (isEng == true) {
+                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                        if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
+                            e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+                        }
+                    }      
+                });
+            }  
+        }
+    textArea.focus();
+    document.querySelector(`.button[data="${e.keyCode}"]`) === null ? document.querySelector(`.button[data="${e.code}"]`).classList.add('active') : document.querySelector(`.button[data="${e.keyCode}"]`).classList.add('active');
 });
 
 document.body.addEventListener('keyup', function (e) {
@@ -200,15 +278,30 @@ document.body.addEventListener('keyup', function (e) {
         e.classList.remove('active');
     });
     if (!keyPressed) {
-        if (e.keyCode == 16) {
+        if (e.keyCode==16 && !isCaps) {
             changeSize(isEng, isUpper);
             isUpper = false;
         }
         keyPressed = true;
     }
+        if(e.keyCode==16 && isCaps){
+            if (isEng == false) {
+                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                        if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
+                            e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+                        }
+                    }      
+                });
+            }
+            if (isEng == true) {
+                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
+                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
+                        if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
+                            e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+                        }
+                    }      
+                });
+            }  
+        }
 });
-
-document.body.onkeydown = function (event) {
-    console.log(event.code);
-    document.querySelector(`.button[data="${event.keyCode}"]`) === null ? document.querySelector(`.button[data="${event.code}"]`).classList.add('active') : document.querySelector(`.button[data="${event.keyCode}"]`).classList.add('active');
-}
