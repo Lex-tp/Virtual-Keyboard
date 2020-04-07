@@ -21,8 +21,8 @@ html {
   margin-right: 5px;
   font-family: 'Roboto', sans-serif;
   color: white;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 .button:hover {
   background-color: #188FFF;
@@ -84,6 +84,13 @@ html {
   color: #034DB0;
 }
 
+.active-shift {
+  background-color: #ffffff;
+  border: 1px solid #034DB0;
+  border-radius: 20px;
+  color: #034DB0;
+}
+
 .inputbox {
   width: 794px;
   height: 230px;
@@ -95,6 +102,10 @@ html {
   resize: none;
   outline: none;
   font-size: 1.2rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .infobox {
@@ -102,6 +113,9 @@ html {
   display: -ms-flexbox;
   display: flex;
   color: #188FFF;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 500px;
   font-size: 1.2rem;
   font-weight: 500;
   margin-top: 20px;

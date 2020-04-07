@@ -66,55 +66,74 @@ const EN_KEYS_UP = [
     { key: "🡄", code: 37 }, { key: "🡇", code: 40 }, { key: "🡆", code: 39 }, { key: "Win", code: 92 }]
 ];
 
-const RU_KEYS_CAPS = [81,87,69,82,84,89,85,73,79,80,65,83,68,70,71,72,74,75,76,90,88,67,86,66,78,77,219,221,186,222,188,190,191];
+const RU_KEYS_CAPS = [192, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 90, 88, 67, 86, 66, 78, 77, 219, 221, 186, 222, 188, 190, 191, 220];
 
-const EN_KEYS_CAPS = [81,87,69,82,84,89,85,73,79,80,65,83,68,70,71,72,74,75,76,90,88,67,86,66,78,77];
+const EN_KEYS_CAPS = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71, 72, 74, 75, 76, 90, 88, 67, 86, 66, 78, 77];
 
 let keyPressed = true;
 let isEng = false;
 let isUpper = false;
-let infoBox = document.createElement('div');
-let infoText = document.createElement('span');
-let infoTextPlus = document.createElement('span');
-let infoShiftBtn = document.createElement('div');
+let infoBox = document.createElement("div");
+let infoText = document.createElement("span");
+let infoOS = document.createElement("span");
+let infoTextPlus = document.createElement("span");
+let infoShiftBtn = document.createElement("div");
 let infoShiftText = document.createElement("p");
-let infoAltBtn = document.createElement('div');
-let infoAltText = document.createElement("p");
-let inputText = document.createElement('div');
-let textArea = document.createElement('textarea');
+let infoCtrlBtn = document.createElement("div");
+let infoCtrlText = document.createElement("p");
+let inputText = document.createElement("div");
+let textArea = document.createElement("textarea");
 let buttonKey, key, lineBoard;
-let container = document.createElement('div');
-let keyBoard = document.createElement('div');
+let container = document.createElement("div");
+let keyBoard = document.createElement("div");
 let hotKey = false;
-let isCaps=false;
-infoText.innerText = "To change the language, press ";
-infoTextPlus.innerText = "+";
-infoShiftText.innerText = "Ctrl";
-infoShiftBtn.classList.add('button-big');
-infoAltText.innerText = "Shift";
-infoAltBtn.classList.add('button-big');
-container.classList.add("container");
-keyBoard.classList.add("keyboard");
-textArea.classList.add("inputbox");
-infoBox.classList.add("infobox");
-infoAltBtn.appendChild(infoAltText);
-infoShiftBtn.appendChild(infoShiftText);
-infoBox.appendChild(infoText);
-infoBox.appendChild(infoShiftBtn);
-infoBox.appendChild(infoTextPlus);
-infoBox.appendChild(infoAltBtn);
-inputText.appendChild(textArea);
-container.appendChild(inputText);
-container.appendChild(keyBoard);
-container.appendChild(infoBox);
-document.body.append(container);
+let isCaps = false;
+
+createDomTree();
+
+function createDomTree() {
+    infoOS.innerText="Developed by Windows!";
+    infoText.innerText = "To change the language, press ";
+    infoTextPlus.innerText = "+";
+    infoShiftText.innerText = "Ctrl";
+    infoShiftBtn.classList.add("button-big");
+    infoCtrlText.innerText = "Shift";
+    infoCtrlBtn.classList.add("button-big");
+    container.classList.add("container");
+    keyBoard.classList.add("keyboard");
+    textArea.classList.add("inputbox");
+    infoBox.classList.add("infobox");
+    infoCtrlBtn.appendChild(infoCtrlText);
+    infoShiftBtn.appendChild(infoShiftText);
+    infoBox.appendChild(infoText);
+    infoBox.appendChild(infoShiftBtn);
+    infoBox.appendChild(infoTextPlus);
+    infoBox.appendChild(infoCtrlBtn);
+    infoBox.appendChild(infoOS);
+    inputText.appendChild(textArea);
+    container.appendChild(inputText);
+    container.appendChild(keyBoard);
+    container.appendChild(infoBox);
+    document.body.append(container);
+}
+
+document.body.onload=()=> {
+    if(localStorage.getItem("ENG")=="true"){
+        isEng=false;
+        changeLang();
+    }
+    else {
+        isEng=true;
+        changeLang();
+    }
+};
 
 let createButtons = function (button, keyButton, keyCode, key) {
-    button = document.createElement('div');
-    keyButton = document.createElement('p');
-    button.setAttribute('data', keyCode);
+    button = document.createElement("div");
+    keyButton = document.createElement("p");
+    button.setAttribute("data", keyCode);
     button.appendChild(keyButton);
-    button.querySelector('p').innerText = key;
+    button.querySelector("p").innerText = key;
     switch (keyCode) {
         case 8:
         case 20:
@@ -135,10 +154,11 @@ let createButtons = function (button, keyButton, keyCode, key) {
         }
     }
     return button;
-}
+};
+
 
 for (let i = 0; i < RU_KEYS.length; i++) {
-    lineBoard = document.createElement('div');
+    lineBoard = document.createElement("div");
     lineBoard.classList.add("line");
     keyBoard.appendChild(lineBoard);
     for (let j = 0; j < RU_KEYS[i].length; j++) {
@@ -148,160 +168,391 @@ for (let i = 0; i < RU_KEYS.length; i++) {
 }
 
 function changeCaps() {
-    if(!isCaps) {
+    if (!isCaps) {
         if (isEng == false) {
-            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                    if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
-                        e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
                     }
-                }          
+                }
             });
         }
         if (isEng == true) {
-            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                    if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
-                        e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
                     }
-                }      
+                }
             });
         }
-        document.querySelector(`.button[data="${20}"]`).classList.add('active-caps');
-        isCaps=true;
-    }else{
+        document.querySelector(`.button[data="${20}"]`).classList.add("active-caps");
+        isCaps = true;
+    } else {
         if (isEng == false) {
-            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                    if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
-                        e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
                     }
-                }      
+                }
             });
         }
         if (isEng == true) {
-            keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                    if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
-                        e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
                     }
-                }      
+                }
             });
         }
-        document.querySelector(`.button[data="${20}"]`).classList.remove('active-caps');
-        isCaps=false;
+        document.querySelector(`.button[data="${20}"]`).classList.remove("active-caps");
+        isCaps = false;
     }
 }
 
+document.addEventListener("mousedown", function (event) {
+    let selectItem = event.toElement;
+    if ((event.target.tagName == "DIV" && event.target.classList.contains("button")) || event.target.tagName == "P") {
+        event.target.tagName == "DIV" ? selectItem.classList.add("active") : selectItem.parentNode.classList.add("active");
+    } else {
+        return;
+    }
+
+    if (event.target.getAttribute("data") == "Space" || selectItem.parentNode.getAttribute("data") == "Space") {
+        setSelectionRange(" ");
+    }
+    if (event.target.getAttribute("data") == 9 || selectItem.parentNode.getAttribute("data") == 9) {
+        setSelectionRange("\t");
+    }
+    if (event.target.getAttribute("data") == 13 || selectItem.parentNode.getAttribute("data") == 13) {
+        setSelectionRange("\n");
+    }
+    if (event.target.getAttribute("data") == 8 || selectItem.parentNode.getAttribute("data") == 8) {
+        let start = textArea.selectionStart,
+            end = textArea.selectionEnd;
+        if (!textArea.setRangeText) { return; }
+        if (start >= end) {
+            if (start <= 0 || !textArea.setSelectionRange) { return; }
+            textArea.setSelectionRange(start - 1, start);
+        }
+        textArea.setRangeText("");
+        textArea.focus();
+    }
+    if (event.target.getAttribute("data") == 46 || selectItem.parentNode.getAttribute("data") == 46) {
+        let start = textArea.selectionStart,
+            end = textArea.selectionEnd;
+        if (!textArea.setRangeText) { return; }
+        if (start >= end) {
+            if (start <= 0 || !textArea.setSelectionRange) { return; }
+            textArea.setSelectionRange(start, start + 1);
+        }
+        textArea.setRangeText("");
+        textArea.focus();
+    }
+
+    if ((event.target.getAttribute("data") == "ShiftLeft"|| selectItem.parentNode.getAttribute("data") == "ShiftLeft" || event.target.getAttribute("data") == "ShiftRight"|| selectItem.parentNode.getAttribute("data") == "ShiftRight")) {
+        isUpper = false;
+        changeSize();
+        isUpper = true;
+    }
+
+    if ((event.target.getAttribute("data") != "ShiftRight" && selectItem.parentNode.getAttribute("data") != "ShiftRight") && (event.target.getAttribute("data") != "ShiftLeft" && selectItem.parentNode.getAttribute("data") != "ShiftLeft")
+    &&(event.target.getAttribute("data") != 8 && selectItem.parentNode.getAttribute("data") != 8) && (event.target.getAttribute("data") != 13 && selectItem.parentNode.getAttribute("data") != 13) 
+    && (event.target.getAttribute("data") != 9 && selectItem.parentNode.getAttribute("data") != 9) && (event.target.getAttribute("data") != "Space" && selectItem.parentNode.getAttribute("data") != "Space") 
+    && (event.target.getAttribute("data") != 46 && selectItem.parentNode.getAttribute("data") != 46) && (event.target.getAttribute("data") != 20 && selectItem.parentNode.getAttribute("data") != 20)
+    && (event.target.getAttribute("data") != "ControlLeft" && selectItem.parentNode.getAttribute("data") != "ControlLeft") && (event.target.getAttribute("data") != "ControlRight" && selectItem.parentNode.getAttribute("data") != "ControlRight")
+    && (event.target.getAttribute("data") != "AltLeft" && selectItem.parentNode.getAttribute("data") != "AltLeft") && (event.target.getAttribute("data") != "AltRight" && selectItem.parentNode.getAttribute("data") != "AltRight")
+    && (event.target.getAttribute("data") != 92  && selectItem.parentNode.getAttribute("data") != 92)) {
+        event.target.tagName == "DIV" ? setSelectionRange(selectItem.textContent) : setSelectionRange(selectItem.parentNode.textContent);
+    }
+    if (event.target.getAttribute("data") == 20 || selectItem.parentNode.getAttribute("data") == 20) {
+        changeCaps();
+    }
+    if ((event.target.getAttribute("data") == "ShiftLeft"|| selectItem.parentNode.getAttribute("data") == "ShiftLeft" || event.target.getAttribute("data") == "ShiftRight"|| selectItem.parentNode.getAttribute("data") == "ShiftRight") && isCaps) {
+        if (isEng == false) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        if (e.getAttribute("data") == 191) {
+                            e.querySelector("p").innerText = ",";
+                        } else {
+                            if (e.getAttribute("data") == 220) {
+                                e.querySelector("p").innerText = "/";
+                            } else {
+                                e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
+                            }
+                        }
+                    }
+                }
+                for (let j = 1; j < RU_KEYS_UP[0].length; j++) {
+                    if (RU_KEYS_UP[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = RU_KEYS_UP[0][j].key;
+                    }
+                }
+            });
+        }
+        if (isEng == true) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
+                    }
+                }
+                for (let j = 0; j < EN_KEYS_UP[0].length; j++) {
+                    if (EN_KEYS_UP[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = EN_KEYS_UP[0][j].key;
+                    }
+                }
+            });
+        }
+    }
+});
+
+document.addEventListener("mouseup", function (event) {
+    let selectItem = event.toElement;
+    if ((event.target.tagName == "DIV" && event.target.classList.contains("button")) || event.target.tagName == "P") {
+        event.target.tagName == "DIV" ? selectItem.classList.remove("active") : selectItem.parentNode.classList.remove("active");
+    } else {
+        return;
+    }
+
+    if ((event.target.getAttribute("data") == "ShiftLeft"|| selectItem.parentNode.getAttribute("data") == "ShiftLeft" || event.target.getAttribute("data") == "ShiftRight"|| selectItem.parentNode.getAttribute("data") == "ShiftRight")) {
+        changeSize(isEng, isUpper);
+        isUpper = false;
+    }
+
+    if ((event.target.getAttribute("data") == "ShiftLeft"|| selectItem.parentNode.getAttribute("data") == "ShiftLeft" || event.target.getAttribute("data") == "ShiftRight"|| selectItem.parentNode.getAttribute("data") == "ShiftRight") && isCaps) {
+        if (isEng == false) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        if (e.getAttribute("data") == 191) {
+                            e.querySelector("p").innerText = ".";
+                        } else {
+                            if (e.getAttribute("data") == 220) {
+                                e.querySelector("p").innerText = "\\";
+                            } else {
+                                e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
+                            }
+                        }
+                    }
+                }
+                for (let j = 1; j < RU_KEYS[0].length; j++) {
+                    if (RU_KEYS[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = RU_KEYS[0][j].key;
+                    }
+                }
+            });
+        }
+        if (isEng == true) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
+                    }
+                }
+                for (let j = 0; j < EN_KEYS[0].length; j++) {
+                    if (EN_KEYS[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = EN_KEYS[0][j].key;
+                    }
+                }
+            });
+        }
+    }
+});
+
 function changeLang() {
     if (isEng == false) {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = EN_KEYS.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = EN_KEYS.flat()[i].key;
             isEng = true;
+            localStorage.setItem("ENG", true);
         });
     } else {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = RU_KEYS.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = RU_KEYS.flat()[i].key;
             isEng = false;
+            localStorage.setItem("ENG", false);
         });
     }
 }
 
 function changeSize() {
     if (isEng == false && isUpper == false) {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = RU_KEYS_UP.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = RU_KEYS_UP.flat()[i].key;
         });
     }
     if (isEng == false && isUpper == true) {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = RU_KEYS.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = RU_KEYS.flat()[i].key;
         });
     }
     if (isEng == true && isUpper == false) {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = EN_KEYS_UP.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = EN_KEYS_UP.flat()[i].key;
         });
     }
     if (isEng == true && isUpper == true) {
-        keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-            e.querySelector('p').innerText = EN_KEYS.flat()[i].key;
+        keyBoard.querySelectorAll(".button").forEach(function (e, i) {
+            e.querySelector("p").innerText = EN_KEYS.flat()[i].key;
         });
     }
 }
-document.body.addEventListener('keydown', function (e) {
+document.body.addEventListener("keydown", function (event) {
     if (keyPressed) {
-        if (e.keyCode==16 && !isCaps) {
-            isUpper=false;
+        if (event.keyCode == 16 && !isCaps) {
+            document.querySelector(`.button[data="${event.code}"]`).classList.add("active-shift");
+            isUpper = false;
             changeSize();
             isUpper = true;
         }
         keyPressed = false;
     }
-    if (e.ctrlKey) hotKey = true;
-    if (e.shiftKey && hotKey) {
+    if (event.ctrlKey) hotKey = true;
+    if (event.shiftKey && hotKey) {
         changeLang();
         isUpper = true;
         changeSize();
         hotKey = false;
     }
-    e.preventDefault();
-    if(e.keyCode==20) {
+    event.preventDefault();
+    if (event.keyCode == 20) {
         changeCaps();
     }
-    if(e.keyCode==16 && isCaps){
-            if (isEng == false) {
-                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                        if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
-                            e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
+    if (event.keyCode == 16 && isCaps) {
+        if (isEng == false) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        if (e.getAttribute("data") == 191) {
+                            e.querySelector("p").innerText = ",";
+                        } else {
+                            if (e.getAttribute("data") == 220) {
+                                e.querySelector("p").innerText = "/";
+                            } else {
+                                e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
+                            }
                         }
-                    }      
-                });
-            }
-            if (isEng == true) {
-                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                        if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
-                            e.querySelector('p').innerText=e.querySelector('p').innerText.toLowerCase();
-                        }
-                    }      
-                });
-            }  
+                    }
+                }
+                for (let j = 1; j < RU_KEYS_UP[0].length; j++) {
+                    if (RU_KEYS_UP[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = RU_KEYS_UP[0][j].key;
+                    }
+                }
+            });
         }
+        if (isEng == true) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toLowerCase();
+                    }
+                }
+                for (let j = 0; j < EN_KEYS_UP[0].length; j++) {
+                    if (EN_KEYS_UP[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = EN_KEYS_UP[0][j].key;
+                    }
+                }
+            });
+        }
+    }
     textArea.focus();
-    document.querySelector(`.button[data="${e.keyCode}"]`) === null ? document.querySelector(`.button[data="${e.code}"]`).classList.add('active') : document.querySelector(`.button[data="${e.keyCode}"]`).classList.add('active');
+    if (event.code == "Space") {
+        setSelectionRange(" ");
+    }
+    if (event.code == "Tab") {
+        setSelectionRange("\t");
+    }
+    if (event.code == "Enter") {
+        setSelectionRange("\n");
+    }
+    if (event.code == "Backspace") {
+        let start = textArea.selectionStart,
+            end = textArea.selectionEnd;
+        if (!textArea.setRangeText) { return; }
+        if (start >= end) {
+            if (start <= 0 || !textArea.setSelectionRange) { return; }
+            textArea.setSelectionRange(start - 1, start);
+        }
+        textArea.setRangeText("");
+        textArea.focus();
+    }
+    if (event.code == "Delete") {
+        let start = textArea.selectionStart,
+            end = textArea.selectionEnd;
+        if (!textArea.setRangeText) { return; }
+        if (start >= end) {
+            if (start <= 0 || !textArea.setSelectionRange) { return; }
+            textArea.setSelectionRange(start, start + 1);
+        }
+        textArea.setRangeText("");
+        textArea.focus();
+    }
+    if (event.code != "Backspace" && event.code != "Enter" && event.code != "Tab" && event.code != "Space" && event.code != "Delete" && event.code != "CapsLock") {
+        document.querySelector(`.button[data="${event.keyCode}"]`) !== null ? setSelectionRange(document.querySelector(`.button[data="${event.keyCode}"]`).querySelector("p").innerText) : null;
+    }
+    document.querySelector(`.button[data="${event.keyCode}"]`) === null ? document.querySelector(`.button[data="${event.code}"]`).classList.add("active") : document.querySelector(`.button[data="${event.keyCode}"]`).classList.add("active");
 });
 
-document.body.addEventListener('keyup', function (e) {
-    keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-        e.classList.remove('active');
+function setSelectionRange(text) {
+    textArea.focus();
+    textArea.setRangeText(text, textArea.selectionStart, textArea.selectionEnd, "end");
+
+}
+
+document.body.addEventListener("keyup", function (event) {
+    keyBoard.querySelectorAll(".button").forEach(function (e) {
+        e.classList.remove("active");
     });
+    document.querySelector(`.button[data="${event.code}"]`) === null ? null : document.querySelector(`.button[data="${event.code}"]`).classList.remove("active-shift");
     if (!keyPressed) {
-        if (e.keyCode==16 && !isCaps) {
+        if (event.keyCode == 16 && !isCaps) {
             changeSize(isEng, isUpper);
             isUpper = false;
         }
         keyPressed = true;
     }
-        if(e.keyCode==16 && isCaps){
-            if (isEng == false) {
-                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                        if(RU_KEYS_CAPS[j]==e.getAttribute('data')){
-                            e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
+    if (event.keyCode == 16 && isCaps) {
+        if (isEng == false) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (RU_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        if (e.getAttribute("data") == 191) {
+                            e.querySelector("p").innerText = ".";
+                        } else {
+                            if (e.getAttribute("data") == 220) {
+                                e.querySelector("p").innerText = "\\";
+                            } else {
+                                e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
+                            }
                         }
-                    }      
-                });
-            }
-            if (isEng == true) {
-                keyBoard.querySelectorAll('.button').forEach(function (e, i) {
-                    for(let j=0; j<RU_KEYS_CAPS.length;j++) {
-                        if(EN_KEYS_CAPS[j]==e.getAttribute('data')){
-                            e.querySelector('p').innerText=e.querySelector('p').innerText.toUpperCase();
-                        }
-                    }      
-                });
-            }  
+                    }
+                }
+                for (let j = 1; j < RU_KEYS[0].length; j++) {
+                    if (RU_KEYS[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = RU_KEYS[0][j].key;
+                    }
+                }
+            });
         }
+        if (isEng == true) {
+            keyBoard.querySelectorAll(".button").forEach(function (e) {
+                for (let j = 0; j < RU_KEYS_CAPS.length; j++) {
+                    if (EN_KEYS_CAPS[j] == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = e.querySelector("p").innerText.toUpperCase();
+                    }
+                }
+                for (let j = 0; j < EN_KEYS[0].length; j++) {
+                    if (EN_KEYS[0][j].code == e.getAttribute("data")) {
+                        e.querySelector("p").innerText = EN_KEYS[0][j].key;
+                    }
+                }
+            });
+        }
+    }
 });

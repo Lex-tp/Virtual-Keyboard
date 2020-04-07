@@ -22,7 +22,7 @@ html {
     margin-right: 5px;
     font-family: 'Roboto', sans-serif;
     color: white;
-    transition: 0.2s;
+    transition: 0.1s;
     &:hover {
         background-color: $hoverColor;
         border: 1px solid white; 
@@ -85,6 +85,13 @@ html {
     color: $mainColor;
 }
 
+.active-shift {
+    background-color: $pressedColor;
+    border: 1px solid $mainColor; 
+    border-radius: 20px;
+    color: $mainColor;
+}
+
 .inputbox {
     width: 794px;
     height: 230px;
@@ -96,11 +103,14 @@ html {
     resize: none;
     outline: none;
     font-size: 1.2rem;
+    user-select: none;
 }
 
 .infobox {
     display: flex;
     color: #188FFF;
+    flex-wrap: wrap;
+    width: 500px;
     font-size: 1.2rem;
     font-weight: 500;
     margin-top: 20px;
