@@ -1,0 +1,25 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "virtual-keyboard task",
+  "main": "scripts/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lex-tp/Virtual-Keyboard.git"
+  },
+  "keywords": [
+    "virtual-keyboard"
+  ],
+  "author": "Denis Korotkevich (volk.denis98@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lex-tp/Virtual-Keyboard/issues"
+  },
+  "homepage": "https://github.com/Lex-tp/Virtual-Keyboard#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}

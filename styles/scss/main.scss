@@ -1,0 +1,148 @@
+@import "color";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.container {
+    width: 1020px;
+    margin: 0 auto;
+}
+
+.button {
+    width: 45px;
+    height: 45px;
+    background-color: $mainColor;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 10px;
+    border: 1px solid white;
+    margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    transition: 0.1s;
+    &:hover {
+        background-color: $hoverColor;
+        border: 1px solid white; 
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.button-big{
+    width: 97px;
+    height: 45px;
+    background-color: $mainColor;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 10px;
+    border: 1px solid white;
+    margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    &:hover {
+        background-color: $hoverColor;
+        border: 1px solid white; 
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.button-big-space{
+    width: 357px;
+    height: 45px;
+    background-color: $mainColor;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 10px;
+    border: 1px solid white;
+    margin-right: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    &:hover {
+        background-color: $hoverColor;
+        border: 1px solid white; 
+        color: white;
+        cursor: pointer;
+        translate: 1s liner;
+    }
+}
+
+
+.active {
+    background-color: $pressedColor;
+    border: 1px solid $mainColor; 
+    border-radius: 20px;
+    color: $mainColor;
+}
+
+.active-caps {
+    background-color: $pressedColor;
+    border: 1px solid $mainColor; 
+    border-radius: 20px;
+    color: $mainColor;
+}
+
+.active-shift {
+    background-color: $pressedColor;
+    border: 1px solid $mainColor; 
+    border-radius: 20px;
+    color: $mainColor;
+}
+
+.inputbox {
+    width: 794px;
+    height: 230px;
+    margin-left: 110px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    border-radius: 10px;
+    border: 1px solid #188FFF;
+    resize: none;
+    outline: none;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.infobox {
+    display: flex;
+    color: #188FFF;
+    flex-wrap: wrap;
+    width: 500px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-left: 110px;
+    span {
+        margin-top: 10px;
+        font-weight: 700;
+    }
+    .button-big {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.keyboard {
+    padding: 10px;
+    background-color: $mainColor;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: max-content;
+}
+
+.line {
+    display: flex;
+    margin-top: 5px;
+    &::after{
+        display: flex;
+        flex-direction: column;
+        content: "";
+        clear: both;
+    }  
+    &:nth-child(1) {
+        margin-bottom: 10px; 
+    } 
+}
