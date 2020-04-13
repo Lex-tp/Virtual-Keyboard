@@ -29,47 +29,44 @@ html {
         color: white;
         cursor: pointer;
     }
-}
-
-.button-big{
-    width: 97px;
-    height: 45px;
-    background-color: $mainColor;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 10px;
-    border: 1px solid white;
-    margin-right: 5px;
-    font-family: 'Roboto', sans-serif;
-    color: white;
-    &:hover {
-        background-color: $hoverColor;
-        border: 1px solid white; 
+    &-big{
+        width: 97px;
+        height: 45px;
+        background-color: $mainColor;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 10px;
+        border: 1px solid white;
+        margin-right: 5px;
+        font-family: 'Roboto', sans-serif;
         color: white;
-        cursor: pointer;
+        &:hover {
+            background-color: $hoverColor;
+            border: 1px solid white; 
+            color: white;
+            cursor: pointer;
+        }
+        &-space {
+            width: 357px;
+            height: 45px;
+            background-color: $mainColor;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 10px;
+            border: 1px solid white;
+            margin-right: 5px;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            &:hover {
+                background-color: $hoverColor;
+                border: 1px solid white; 
+                color: white;
+                cursor: pointer;
+                translate: 1s liner;
+            }
+        }
     }
 }
-
-.button-big-space{
-    width: 357px;
-    height: 45px;
-    background-color: $mainColor;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 10px;
-    border: 1px solid white;
-    margin-right: 5px;
-    font-family: 'Roboto', sans-serif;
-    color: white;
-    &:hover {
-        background-color: $hoverColor;
-        border: 1px solid white; 
-        color: white;
-        cursor: pointer;
-        translate: 1s liner;
-    }
-}
-
 
 .active {
     background-color: $pressedColor;
